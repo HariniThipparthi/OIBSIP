@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #app {
+            margin-top: 20px;
+        }
+
+        #task-container, #completed-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            background-color: #fff;
+            padding: 8px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #task-input {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-right: 8px;
+            width: 70%;
+        }
+
+        #form-container {
+            display: flex;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do App</h1>
+        <div id="app">
+            <div id="task-container">
+                <h2>Pending Tasks</h2>
+                <ul id="pending-tasks"></ul>
+            </div>
+            <div id="completed-container">
+                <h2>Completed Tasks</h2>
+                <ul id="completed-tasks"></ul>
+            </div>
+            <div id="form-container">
+                <input type="text" id="task-input" placeholder="Add a new task..." required>
+                <button onclick="addTask()">Add Task</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('task-input');
+            const taskText = taskInput.value.trim();
+
+            if (taskText !== '') {
+                const pendingTasksList = document.getElementById('pending-tasks');
+                const task = document.createElement('li');
+                task.innerHTML = `
+                    <span>${taskText}</span>
+                    <button onclick="completeTask(this.parentElement)">Complete</button>
+                    <button onclick="deleteTask(this.parentElement)">Delete</button>
+                `;
+                pendingTasksList.appendChild(task);
+                taskInput.value = '';
+            }
+        }
+
+        function completeTask(taskElement) {
+            const completedTasksList = document.getElementById('completed-tasks');
+            taskElement.querySelector('button').remove(); // Remove the "Complete" button
+            completedTasksList.appendChild(taskElement);
+        }
+
+        function deleteTask(taskElement) {
+            taskElement.remove();
+        }
+    </script>
+</body>
+</html>
